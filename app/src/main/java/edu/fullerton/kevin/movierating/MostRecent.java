@@ -36,8 +36,11 @@ public class MostRecent extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent(getActivity(), EditMovie.class);
-                Movie o = (Movie) movieListView.getItemAtPosition(position);
-
+                Movie movie = (Movie) movieListView.getItemAtPosition(position);
+                intent.putExtra("name", movie.getrName());
+                intent.putExtra("date", movie.getrDate());
+                intent.putExtra("rating", movie.getRating());
+                intent.putExtra("askMeLater", movie.getAskMeLater());
                 startActivity(intent);
 
             }
