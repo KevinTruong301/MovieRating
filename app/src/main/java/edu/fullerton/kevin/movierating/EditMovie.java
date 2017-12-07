@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * Created by Kevin on 12/7/2017.
@@ -13,6 +14,7 @@ import android.widget.Button;
 
 public class EditMovie extends AppCompatActivity implements View.OnClickListener{
 
+    private int id;
     private String name;
     private String date;
     private int rating;
@@ -21,6 +23,9 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
     private Button save;
     private Button cancel;
     private Button delete;
+    private MovieDB db;
+    private EditText editName;
+    private EditText editDate;
 
 
     public EditMovie() {
@@ -34,10 +39,14 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
 
         intent = getIntent();
 
+        id = intent.getIntExtra("id", 0);
         name = intent.getStringExtra("name");
         date = intent.getStringExtra("date");
         rating = intent.getIntExtra("rating", 0);
         askMeLater = intent.getBooleanExtra("askMeLater", false);
+
+        editName = (EditText) findViewById(R.id.editName);
+        editDate = (EditText) findViewById(R.id.editDate);
 
         save = (Button) findViewById(R.id.save);
         save.setOnClickListener(this);
@@ -48,18 +57,41 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
         delete = (Button) findViewById(R.id.delete);
         delete.setOnClickListener(this);
 
+        db = new MovieDB(this);
+
+
+        editName.setText(name);
+        editDate.setText(date);
+
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.save:
+                setValues();
+                saveMovie();
+                goBackToMain();
                 break;
             case R.id.cancel:
-                Intent intent = new Intent(this, Main.class);
-                startActivity(intent);
+                goBackToMain();
                 break;
             case R.id.delete:
         }
+    }
+
+    public void setValues(){
+        name = editName.getText().toString();
+        date = editDate.getText().toString();
+    }
+
+    public void saveMovie(){
+        Movie newMovie = new Movie(id,name,date,rating,askMeLater);
+        db.updateMovie(newMovie);
+    }
+
+    public void goBackToMain(){
+        Intent intent = new Intent(this, Main.class);
+        startActivity(intent);
     }
 }

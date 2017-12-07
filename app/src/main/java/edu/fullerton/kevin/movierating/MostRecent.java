@@ -37,6 +37,7 @@ public class MostRecent extends Fragment {
 
                 Intent intent = new Intent(getActivity(), EditMovie.class);
                 Movie movie = (Movie) movieListView.getItemAtPosition(position);
+                intent.putExtra("id", movie.getMovieID());
                 intent.putExtra("name", movie.getrName());
                 intent.putExtra("date", movie.getrDate());
                 intent.putExtra("rating", movie.getRating());
