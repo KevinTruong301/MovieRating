@@ -7,11 +7,11 @@ package edu.fullerton.kevin.movierating;
 public class Movie {
     private String rName;
     private String rDate;
-    private int rating;
+    private float rating;
     private boolean askMeLater;
     private int movieID;
 
-    public Movie(int ID, String rName, String rDate, int rating, boolean askMeLater) {
+    public Movie(int ID, String rName, String rDate, float rating, boolean askMeLater) {
         this.movieID = ID;
         this.rName = rName;
         this.rDate = rDate;
@@ -20,7 +20,7 @@ public class Movie {
     }
 
 
-    public Movie(String rName, String rDate, int rating, boolean askMeLater) {
+    public Movie(String rName, String rDate, float rating, boolean askMeLater) {
         this.rName = rName;
         this.rDate = rDate;
         this.rating = rating;
@@ -51,11 +51,11 @@ public class Movie {
         this.rDate = rDate;
     }
 
-    public int getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 

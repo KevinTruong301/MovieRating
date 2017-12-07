@@ -20,7 +20,8 @@
         android:text="Rate:"/>
     <RatingBar
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/editRating"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class MovieDB {
 
-    public static final String DB_NAME = "movie.db";
+    public static final String DB_NAME = "movies.db";
     public static final int DB_VERSION = 1;
 
     //DB constants
@@ -40,12 +40,12 @@ public class MovieDB {
             "CREATE TABLE " + TABLE + " (" +
                     ID      +" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NAME    +" TEXT, " +
-                    RATING  +" INTEGER, " +
+                    RATING  +" REAL, " +
                     DATE    +" TEXT, " +
                     ASK_ME_LATER + " BOOL );";
 
     public static final String DROP_TABLE =
-            "DROP TABLE IF EXISTS" + TABLE;
+            "DROP TABLE IF EXISTS " + TABLE;
 
     public static final String TRUNCATE_ALARM_TABLE =
             "DELETE FROM " + TABLE;
@@ -112,7 +112,7 @@ public class MovieDB {
                     cursor.getInt(ID_COLUMN),
                     cursor.getString(NAME_COLUMN),
                     cursor.getString(DATE_COLUMN),
-                    cursor.getInt(RATING_COLUMN),
+                    cursor.getFloat(RATING_COLUMN),
                     cursor.getInt(ASK_ME_LATER_COLUMN) > 0
             );
 

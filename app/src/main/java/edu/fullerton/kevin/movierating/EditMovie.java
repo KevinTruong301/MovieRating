@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 /**
  * Created by Kevin on 12/7/2017.
@@ -17,7 +18,7 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
     private int id;
     private String name;
     private String date;
-    private int rating;
+    private float rating;
     private boolean askMeLater;
     private Intent intent;
     private Button save;
@@ -26,6 +27,7 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
     private MovieDB db;
     private EditText editName;
     private EditText editDate;
+    private RatingBar editRating;
 
 
     public EditMovie() {
@@ -42,11 +44,12 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
         id = intent.getIntExtra("id", 0);
         name = intent.getStringExtra("name");
         date = intent.getStringExtra("date");
-        rating = intent.getIntExtra("rating", 0);
+        rating = intent.getFloatExtra("rating", 0);
         askMeLater = intent.getBooleanExtra("askMeLater", false);
 
         editName = (EditText) findViewById(R.id.editName);
         editDate = (EditText) findViewById(R.id.editDate);
+        editRating = (RatingBar) findViewById(R.id.editRating);
 
         save = (Button) findViewById(R.id.save);
         save.setOnClickListener(this);
@@ -62,6 +65,7 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
 
         editName.setText(name);
         editDate.setText(date);
+        editRating.setRating(rating);
 
     }
 
@@ -83,6 +87,7 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
     public void setValues(){
         name = editName.getText().toString();
         date = editDate.getText().toString();
+        rating = editRating.getRating();
     }
 
     public void saveMovie(){
