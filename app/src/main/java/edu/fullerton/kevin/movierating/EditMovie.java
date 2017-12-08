@@ -81,7 +81,14 @@ public class EditMovie extends AppCompatActivity implements View.OnClickListener
                 goBackToMain();
                 break;
             case R.id.delete:
+                deleteMovie();
+                goBackToMain();
+                break;
         }
+    }
+
+    public void deleteMovie(){
+        db.deleteMovie(id);
     }
 
     public void setValues(){
