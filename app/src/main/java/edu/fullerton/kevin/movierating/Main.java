@@ -16,25 +16,36 @@ public class Main extends AppCompatActivity {
     private TabLayout tabLayout;
     private DemoCollectionPagerAdapter mDemoCollectionPagerAdapter;
     private MovieDB db;
+    private int currentTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
 
+        Intent intent = getIntent();
+        currentTab = intent.getIntExtra("currentTab", 0);
+
+
        mDemoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getSupportFragmentManager());
        mViewPager = (ViewPager) findViewById(R.id.pager);
        setmViewPager(mViewPager);
+        mViewPager.setCurrentItem(currentTab);
        db = new MovieDB(getApplicationContext());
        tabLayout = (TabLayout) findViewById((R.id.tabs));
        tabLayout.setupWithViewPager(mViewPager);
     }
 
+    public int getCurrentTab(){
+
+        return tabLayout.getSelectedTabPosition();
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Movie movie = new Movie("New Movie", "DATE", 1, false);
-        db.insertMovie(movie);
-        Intent intent = new Intent(Main.this, Main.class);
+        Intent intent = new Intent(Main.this, EditMovie.class);
+        intent.putExtra("currentTab", tabLayout.getSelectedTabPosition());
+        intent.putExtra("addEdit", "add");
         this.startActivity(intent);
         return true;
     }
@@ -83,5 +94,6 @@ public class Main extends AppCompatActivity {
                     return null;
             }
         }
+
     }
 }

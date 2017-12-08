@@ -22,13 +22,15 @@ public class MostRecent extends Fragment {
     private ListView movieListView;
     private String currentTabTag;
     private Menu menu;
+    private int currentTab;
+
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.most_recent, container, false);
         movieListView = (ListView) view.findViewById(R.id.mostRecent);
-
+        currentTab = ((Main) getActivity()).getCurrentTab();
         setHasOptionsMenu(true);
         refreshMovieList();
 
@@ -41,7 +43,8 @@ public class MostRecent extends Fragment {
                 intent.putExtra("name", movie.getrName());
                 intent.putExtra("date", movie.getrDate());
                 intent.putExtra("rating", movie.getRating());
-                intent.putExtra("askMeLater", movie.getAskMeLater());
+                intent.putExtra("currentTab", currentTab);
+                intent.putExtra("addEdit", "edit");
                 startActivity(intent);
 
             }
@@ -52,7 +55,7 @@ public class MostRecent extends Fragment {
     public void refreshMovieList(){
         Context context = getActivity().getApplicationContext();
         MovieDB db = new MovieDB(context);
-        ArrayList<Movie> movies = db.getMovies();
+        ArrayList<Movie> movies = db.getMostRecentMovies();
 
         MovieAdapter adapter = new MovieAdapter(context, movies);
         movieListView.setAdapter(adapter);

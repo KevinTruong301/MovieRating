@@ -8,23 +8,20 @@ public class Movie {
     private String rName;
     private String rDate;
     private float rating;
-    private boolean askMeLater;
     private int movieID;
 
-    public Movie(int ID, String rName, String rDate, float rating, boolean askMeLater) {
+    public Movie(int ID, String rName, String rDate, float rating) {
         this.movieID = ID;
         this.rName = rName;
         this.rDate = rDate;
         this.rating = rating;
-        this.askMeLater = askMeLater;
     }
 
 
-    public Movie(String rName, String rDate, float rating, boolean askMeLater) {
+    public Movie(String rName, String rDate, float rating) {
         this.rName = rName;
         this.rDate = rDate;
         this.rating = rating;
-        this.askMeLater = askMeLater;
     }
 
     public int getMovieID() {
@@ -57,13 +54,5 @@ public class Movie {
 
     public void setRating(float rating) {
         this.rating = rating;
-    }
-
-    public boolean getAskMeLater() {
-        return askMeLater;
-    }
-
-    public void setAskMeLater(boolean askMeLater) {
-        this.askMeLater = askMeLater;
     }
 }

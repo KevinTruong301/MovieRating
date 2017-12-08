@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class MovieDB {
 
     public static final String DB_NAME = "movies.db";
-    public static final int DB_VERSION = 1;
+    public static final int DB_VERSION = 2;
 
     //DB constants
     public static final String TABLE = "Movie";
@@ -41,8 +41,7 @@ public class MovieDB {
                     ID      +" INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NAME    +" TEXT, " +
                     RATING  +" REAL, " +
-                    DATE    +" TEXT, " +
-                    ASK_ME_LATER + " BOOL );";
+                    DATE    +" TEXT );";
 
     public static final String DROP_TABLE =
             "DROP TABLE IF EXISTS " + TABLE;
@@ -106,14 +105,40 @@ public class MovieDB {
         return movies;
     }
 
+    public ArrayList<Movie> getHighestRatedMovies(){
+        openReadableDB();
+        String order = RATING + " DESC";
+        Cursor cursor = db.query(TABLE, null, null, null, null, null, order);
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+        while (cursor.moveToNext()){
+            movies.add(getInfoFromCursor(cursor));
+        }
+
+        closeDB();
+        return movies;
+    }
+
+    public ArrayList<Movie> getMostRecentMovies(){
+        openReadableDB();
+        String order = ID + " DESC";
+        Cursor cursor = db.query(TABLE, null, null, null, null, null, order);
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+        while (cursor.moveToNext()){
+            movies.add(getInfoFromCursor(cursor));
+        }
+
+        closeDB();
+        return movies;
+    }
+
+
     public Movie getInfoFromCursor(Cursor cursor){
         try{
             Movie movie = new Movie(
                     cursor.getInt(ID_COLUMN),
                     cursor.getString(NAME_COLUMN),
                     cursor.getString(DATE_COLUMN),
-                    cursor.getFloat(RATING_COLUMN),
-                    cursor.getInt(ASK_ME_LATER_COLUMN) > 0
+                    cursor.getFloat(RATING_COLUMN)
             );
 
             return movie;
@@ -128,8 +153,6 @@ public class MovieDB {
         cv.put(NAME, movie.getrName());
         cv.put(RATING,movie.getRating());
         cv.put(DATE,movie.getrDate());
-        cv.put(ASK_ME_LATER, movie.getAskMeLater());
-
         this.openWriteableDB();
         db.insert(TABLE,null, cv);
         this.closeDB();
@@ -140,8 +163,6 @@ public class MovieDB {
         cv.put(NAME, movie.getrName());
         cv.put(RATING,movie.getRating());
         cv.put(DATE,movie.getrDate());
-        cv.put(ASK_ME_LATER, movie.getAskMeLater());
-
         String where = ID + "=?";
         String[] whereArgs = { String.valueOf(movie.getMovieID()) };
 

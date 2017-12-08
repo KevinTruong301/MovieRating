@@ -46,6 +46,7 @@ public class MovieLayout extends RelativeLayout{
         movie = m;
         nameTextView.setText(m.getrName());
         dateTextView.setText(m.getrDate());
+        ratingBar.setRating(m.getRating());
 
     }
 
